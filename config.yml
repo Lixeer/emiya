@@ -23,7 +23,12 @@ account: # 账号相关
   # sign-server: 'http://127.0.0.1:8080' # 本地签名服务器
   # sign-server: 'https://signserver.example.com' # 线上签名服务器
   # 服务器可使用docker在本地搭建或者使用他人开放的服务
-  sign-server: '-'
+  sign-server: 'https://qsign.lvlv.run:443'
+  # 如果签名服务器的版本在1.1.0及以下, 请将下面的参数改成true
+  is-below-110: false
+  # 签名服务器所需要的apikey, 如果签名服务器的版本在1.1.0及以下则此项无效
+  # 本地部署的默认为114514
+  key: '114514'
 
 heartbeat:
   # 心跳频率, 单位秒
@@ -59,7 +64,7 @@ message:
 
 output:
   # 日志等级 trace,debug,info,warn,error
-  log-level: warn
+  log-level: error
   # 日志时效 单位天. 超过这个时间之前的日志将会被自动删除. 设置为 0 表示永久保留.
   log-aging: 15
   # 是否在每次启动时强制创建全新的文件储存日志. 为 false 的情况下将会在上次启动时创建的日志文件续写
@@ -97,7 +102,6 @@ database: # 数据库相关设置
     # 关闭将无法使用 撤回 回复 get_msg 等上下文相关功能
     enable: false
     cachettl: 3600000000000 # 1h
-
 # 连接服务列表
 servers:
   # 添加方式，同一连接方式可添加多个，具体配置说明请查看文档
@@ -122,5 +126,5 @@ servers:
       # retries-interval: 1500 # 重试时间，单位毫秒，0 时立即
       - url: http://127.0.0.1:5701/ # 地址
         secret: ''                  # 密钥
-      #  max-retries: 10             # 最大重试，0 时禁用
+#        max-retries: 0             # 最大重试，0 时禁用
       #  retries-interval: 1000      # 重试时间，单位毫秒，0 时立即
