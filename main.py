@@ -5,6 +5,7 @@ from fastapi import Request, FastAPI
 
 from libs.Logger import Log
 from libs.message import MessageInput
+from libs.Request import Message
 
 BASEURL = 'http://127.0.0.1:5700'
 
@@ -28,6 +29,8 @@ msg = MessageInput()
 @app.post('/')
 async def handle(request: Request):
     msg.cheak(await request.json())
+    f = Message()
+    log.log_info(f.send_private_msg(2322978154, "ok").text)
     return "data"
 
 
