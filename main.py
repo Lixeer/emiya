@@ -35,7 +35,7 @@ async def handle(request: Request):
 
 
 if __name__ == '__main__':
-    log.log_info("emiyaæ­£åœ¨å¯åŠ¨")
+    log.log_info("emiyaÕıÔÚÆô¶¯")
     import uvicorn
 
     uvicorn.run(app, port=5701, host='0.0.0.0', log_level="warning")
