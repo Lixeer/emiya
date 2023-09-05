@@ -43,5 +43,5 @@ class Log(Singleton):
 privatelog = Log()
 logInfo = privatelog.logInfo
 logWarning = privatelog.logWarning
-logError = privatelog.logWarning
+logError = privatelog.logError
 logDebug = privatelog.logDebug
