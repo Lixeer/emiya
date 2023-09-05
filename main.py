@@ -30,12 +30,12 @@ msg = MessageInput()
 async def handle(request: Request):
     msg.cheak(await request.json())
     f = Message()
-    log.log_info(f.send_private_msg(2322978154, "ok").text)
+    log.logInfo(f.send_private_msg(2322978154, "ok").text)
     return "data"
 
 
 if __name__ == '__main__':
-    log.log_info("emiya正在启动")
+    log.logInfo("emiya正在启动")
     import uvicorn
 
     uvicorn.run(app, port=5701, host='0.0.0.0', log_level="warning")
