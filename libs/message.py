@@ -2,7 +2,7 @@ from libs.Logger import Log
 from libs.singleton import Singleton
 
 
-#要改 后面的输出也要改成小写驼峰而不是大驼峰 改完删掉这行主食
+
 log = Log()
 
 """
