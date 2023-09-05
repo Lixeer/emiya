@@ -31,17 +31,3 @@ logWarning = privatelog.logWarning
 logError = privatelog.logWarning
 logDebug = privatelog.logDebug
 
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"\033[31m[{now}] [ERROR] {message}\033[0m")
-
-    def logDebug(self, message):
-        now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(f"\033[34m[{now}] [DEBUG] {message}\033[0m")
-
-
-# 单例Log惰性实现
-privatelog = Log()
-logInfo = privatelog.logInfo
-logWarning = privatelog.logWarning
-logError = privatelog.logError
-logDebug = privatelog.logDebug
