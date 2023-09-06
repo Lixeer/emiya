@@ -33,6 +33,9 @@ async def handle(request: Request):
     log.logInfo(f.send_private_msg(2322978154, "ok").text)
     return "data"
 
+@app.get('/hello')
+async def test():
+    return "test"
 
 if __name__ == '__main__':
     log.logInfo("emiya正在启动")
