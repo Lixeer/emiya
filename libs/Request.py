@@ -1,4 +1,5 @@
 import abc
+import json
 import requests
 from libs.Logger import Log
 
@@ -6,7 +7,7 @@ log = Log()
 
 
 class RequestsMessage:
-    BASEURL = 'http://127.0.0.1:5700/'
+    BASEURL = "http://127.0.0.1:5700/"
 
     @abc.abstractmethod
     def sendata(self, route: str, data: dict):
@@ -20,25 +21,45 @@ class RequestsMessage:
         # url = f'{self.BASEURL+route}'
         # requests.post(url=url)
 
+    @abc.abstractmethod
+    def get(self, route: str):
+        pass
+        # url = f'{self.BASEURL+route}'
+        # requests.get(url=url)
+
 
 class Message(RequestsMessage):
-
     def sendata(self, route: str, data: dict):
-        url = f'{self.BASEURL + route}'
+        url = f"{self.BASEURL + route}"
         return requests.post(url=url, json=data)
 
     def send(self, route: str):
-        url = f'{self.BASEURL + route}'
+        url = f"{self.BASEURL + route}"
         return requests.post(url=url)
+
+    def get(self, route: str):
+        url = f"{self.BASEURL + route}"
+        return requests.get(url=url)
 
     def get_friend_list(self):
         """
-        响应数据 
+        响应数据
         user_id	int64	QQ 号
         nickname	string	昵称
         source	string	来源
         """
-        return self.send('get_friend_list')
+        return self.send("get_friend_list")
+
+    def get_friend_list(self, flag: bool):
+        """
+        参数
+        字段名	数据类型	默认值	说明
+        user_id	int64	-	好友 QQ 号
+        无响应数据
+        """
+        res = self.get("get_friend_list")
+        data = json.loads(res.text)
+        return data
 
     def delete_friend(self, user_id: int):
         """
@@ -47,10 +68,8 @@ class Message(RequestsMessage):
         user_id	int64	-	好友 QQ 号
         无响应数据
         """
-        data = {
-            'user_id': user_id
-        }
-        self.sendata('delete_friend', data=data)
+        data = {"user_id": user_id}
+        self.sendata("delete_friend", data=data)
 
     def get_login_info(self):
         """
@@ -60,7 +79,7 @@ class Message(RequestsMessage):
         nickname	string	QQ 昵称
         :return: data: dict
         """
-        return self.send('get_login_info')
+        return self.send("get_login_info")
 
     def send_private_msg(self, user_id: int, group_id: int, message: str):
         """
@@ -75,12 +94,12 @@ class Message(RequestsMessage):
         message_id	int32	消息 ID
         """
         data = {
-            'user_id': user_id,
-            'group_id': group_id,
-            'message': message,
-            'auto_escape': False
+            "user_id": user_id,
+            "group_id": group_id,
+            "message": message,
+            "auto_escape": False,
         }
-        return self.sendata('send_private_msg', data)
+        return self.sendata("send_private_msg", data)
 
     def send_private_msg(self, user_id: int, message: str):
         """
@@ -93,12 +112,8 @@ class Message(RequestsMessage):
         字段名	数据类型	说明
         message_id	int32	消息 ID
         """
-        data = {
-            'user_id': user_id,
-            'message': message,
-            'auto_escape': False
-        }
-        return self.sendata('send_private_msg', data)
+        data = {"user_id": user_id, "message": message, "auto_escape": False}
+        return self.sendata("send_private_msg", data)
 
     def send_group_msg(self, group_id: int, message: str):
         """
@@ -112,8 +127,14 @@ class Message(RequestsMessage):
         字段名	    数据类型	   说明
         message_id	int32	消息 ID
         """
+        data = {
+            "group_id": group_id,
+            "message": message,
+            "auto_escape": False,
+        }
+        return self.sendata("send_msg", data)
 
-    def send_msg(self, group_id: int, message: str, message_type='group'):
+    def send_msg(self, group_id: int, message: str, message_type="group"):
         """
         字段名	        数据类型	默认值	说明
         message_type	string	-	消息类型, 支持 private、group , 分别对应私聊、群组, 如不传入, 则根据传入的 *_id 参数判断
@@ -126,14 +147,14 @@ class Message(RequestsMessage):
         message_id	int32	消息 ID
         """
         data = {
-            'message_type': message_type,
-            'group_id': group_id,
-            'message': message,
-            'auto_escape': False
+            "message_type": message_type,
+            "group_id": group_id,
+            "message": message,
+            "auto_escape": False,
         }
-        return self.sendata('send_msg', data)
+        return self.sendata("send_msg", data)
 
-    def send_msg(self, user_id: int, message: str, message_type='private'):
+    def send_msg(self, user_id: int, message: str, message_type="private"):
         """
         字段名	        数据类型	默认值	说明
         message_type	string	-	消息类型, 支持 private、group , 分别对应私聊、群组, 如不传入, 则根据传入的 *_id 参数判断
@@ -146,12 +167,12 @@ class Message(RequestsMessage):
         message_id	int32	消息 ID
         """
         data = {
-            'message_type': message_type,
-            'group_id': user_id,
-            'message': message,
-            'auto_escape': False
+            "message_type": message_type,
+            "group_id": user_id,
+            "message": message,
+            "auto_escape": False,
         }
-        return self.sendata('send_msg', data)
+        return self.sendata("send_msg", data)
 
     def get_msg(self, message_id: int):
         """
@@ -178,10 +199,8 @@ class Message(RequestsMessage):
         user_id	    int64	发送者 QQ 号
         """
 
-        data = {
-            'message_id': message_id
-        }
-        return self.sendata('get_msg', data)
+        data = {"message_id": message_id}
+        return self.sendata("get_msg", data)
 
     def delete_msg(self, message_id: int):
         """
@@ -192,24 +211,20 @@ class Message(RequestsMessage):
         :param message_id:
         :return: 无返回值
         """
-        data = {
-            'message_id': message_id
-        }
-        return self.sendata('delete_msg', data)
+        data = {"message_id": message_id}
+        return self.sendata("delete_msg", data)
 
     def mark_msg_as_read(self, message_id: int):
         """
-                参数
-                字段	        类型	    说明
-                message_id	int32	消息id
+        参数
+        字段	        类型	    说明
+        message_id	int32	消息id
 
-                :param message_id:
-                :return: 无返回值
-                """
-        data = {
-            'message_id': message_id
-        }
-        return self.sendata('mark_msg_as_read', data)
+        :param message_id:
+        :return: 无返回值
+        """
+        data = {"message_id": message_id}
+        return self.sendata("mark_msg_as_read", data)
 
     def get_forward_msg(self, message_id: int):
         """
@@ -222,10 +237,8 @@ class Message(RequestsMessage):
         字段	        类型	                说明
         messages	forward message[]	消息列表
         """
-        data = {
-            'message_id': message_id
-        }
-        return self.sendata('get_forward_msg', data)
+        data = {"message_id": message_id}
+        return self.sendata("get_forward_msg", data)
 
     def send_group_forward_msg(self, group_id: int, messages: dict):
         """
@@ -237,11 +250,8 @@ class Message(RequestsMessage):
         message_id	int64	消息 ID
         forward_id	string	转发消息 ID
         """
-        data = {
-            'group_id': group_id,
-            'messages': messages
-        }
-        return self.sendata('send_group_forward_msg', data)
+        data = {"group_id": group_id, "messages": messages}
+        return self.sendata("send_group_forward_msg", data)
 
     def send_private_forward_msg(self, user_id: int, messages: dict):
         """
@@ -253,11 +263,8 @@ class Message(RequestsMessage):
         message_id	int64	消息 ID
         forward_id	string	转发消息 ID
         """
-        data = {
-            'group_id': user_id,
-            'messages': messages
-        }
-        return self.sendata('send_private_forward_msg', data)
+        data = {"group_id": user_id, "messages": messages}
+        return self.sendata("send_private_forward_msg", data)
 
     def get_group_msg_history(self, message_seq: int, group_id: int):
         """
@@ -267,8 +274,5 @@ class Message(RequestsMessage):
         字段	        类型	        说明
         messages	Message[]	从起始序号开始的前19条消息
         """
-        data = {
-            'message_seq': message_seq,
-            'group_id': group_id
-        }
-        return self.sendata('get_group_msg_history', data)
+        data = {"message_seq": message_seq, "group_id": group_id}
+        return self.sendata("get_group_msg_history", data)

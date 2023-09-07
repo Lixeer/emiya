@@ -1,5 +1,7 @@
-**/__pycache__
+__pycache__
 
 *.token
 
 *.log
+
+MANIFEST-[0-9]*

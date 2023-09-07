@@ -17,3 +17,10 @@
 21:35:12.746002 version@stat F·[1] S·1KiB[1KiB] Sc·[0.25]
 21:35:12.767389 db@janitor F·3 G·0
 21:35:12.767389 db@open done T·21.8985ms
+=============== Sep 7, 2023 (CST) ===============
+14:15:02.521164 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+14:15:02.521673 version@stat F·[1] S·1KiB[1KiB] Sc·[0.25]
+14:15:02.521673 db@open opening
+14:15:02.521673 version@stat F·[1] S·1KiB[1KiB] Sc·[0.25]
+14:15:02.535634 db@janitor F·3 G·0
+14:15:02.535634 db@open done T·13.9606ms
