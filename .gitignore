@@ -5,3 +5,5 @@ __pycache__
 *.log
 
 MANIFEST-[0-9]*
+
+data
