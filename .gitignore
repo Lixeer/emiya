@@ -1,4 +1,10 @@
-__pycache__
+__pycache__/
+
+# 本地临时文件
+.temp/ 
+
+# 本地测试文件
+.test/
 
 *.token
 
