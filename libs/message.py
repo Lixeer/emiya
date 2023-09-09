@@ -14,13 +14,16 @@ log = Log()
 class MessageInput(Singleton):
     def info(self, data: dict):  # debug时使用，输出全部data
         if data['post_type'] != 'meta_event':
-            log.logInfo(data)
+            if data['post_type'] != 'message':
+                log.logInfo(data)
+        else:
+            log.logInfo(f'{data["post_type"]} | STATUS(test)  pr: {data["status"]["stat"]["packet_received"]}  ps: {data["status"]["stat"]["packet_sent"]}  pl: {data["status"]["stat"]["packet_lost"]}')
 
     def infoGroup(self, data: dict):  # group
-        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]}:{data["message"]}')
+        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]}: {data["message"]}')
 
     def infoPrivate(self, data: dict):  # private
-        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]}:{data["message"]}')
+        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]}: {data["message"]}')
 
     def choose(self, data: dict):  # 进行消息分流
         try:
@@ -34,3 +37,4 @@ class MessageInput(Singleton):
 
     def cheak(self, data: dict):  # data数据传入这个会自动分流
         self.choose(data)
+        self.info(data)
