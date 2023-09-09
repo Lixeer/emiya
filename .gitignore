@@ -6,6 +6,9 @@ __pycache__/
 # 本地测试文件
 .test/
 
+# IDE生成文件
+.vscode/
+
 *.token
 
 *.log
