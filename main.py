@@ -23,9 +23,9 @@ def getMsg(id: int):
 
 
 app = FastAPI()
-#使用域内创建
+# 使用域内创建
 
-log = Log()  
+log = Log()
 msg = MessageInput()
 
 
@@ -37,21 +37,20 @@ async def handle(request: Request):
     f = Message()
 
     # 回复测试 23.9.8
-    #小驼峰！！！
+    # 小驼峰！！！
     if data["post_type"] == "message":
         if data["message_type"] == "private":
             userId = data["user_id"]
-            message = "[Reprot]: meaasge received."
+            message = "[Report]: message received."
             res = f.send_private_msg(userId, message=message)
             if res.status_code == 200:
-                log.logDebug(f"[Response]: success")   #f不带{}啥情况
+                log.logDebug(f"[Response]: success")  # f不带{}啥情况
             else:
                 log.logError("[Response]: faild")
 
     # log.logInfo(f.send_private_msg(2322978154, "ok").text)
 
-    return "data"  #去掉这行用cq输出 别用main输出cq信息 23.9.11
-    
+    return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
 
 @app.get("/hello")
@@ -81,20 +80,19 @@ async def fixOutput():
     return -1
 
 
-async def getFixdMsg():
+async def getFixedMsg():
     print("processing start")
     cq = asyncio.create_task(fixOutput())
     result = await cq
     if result == -1:
         pass
-    print("processing end, loding...")
+    print("processing end, loading...")
 
 
 if __name__ == "__main__":
     log.logInfo("emiya正在启动")
     import uvicorn
 
-    asyncio.run(getFixdMsg())  #大概是要用creat_grather() 23.9.11
-    
+    asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
 
     uvicorn.run(app, port=5701, host="0.0.0.0", log_level="warning")
