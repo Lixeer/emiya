@@ -35,19 +35,21 @@ async def handle(request: Request):
     f = Message()
 
     # 回复测试 23.9.8
+    #小驼峰！！！
     if data["post_type"] == "message":
         if data["message_type"] == "private":
-            user_id = data["user_id"]
+            userId = data["user_id"]
             message = "[Reprot]: meaasge received."
-            res = f.send_private_msg(user_id, message=message)
+            res = f.send_private_msg(userId, message=message)
             if res.status_code == 200:
-                log.logDebug(f"[Response]: success")
+                log.logDebug(f"[Response]: success")   #f不带{}啥情况
             else:
                 log.logError("[Response]: faild")
 
     # log.logInfo(f.send_private_msg(2322978154, "ok").text)
 
-    return "data"
+    return "data"  #去掉这行用cq输出 别用main输出cq信息 23.9.11
+    
 
 
 @app.get("/hello")
@@ -90,6 +92,7 @@ if __name__ == "__main__":
     log.logInfo("emiya正在启动")
     import uvicorn
 
-    asyncio.run(getFixdMsg())
+    asyncio.run(getFixdMsg())  #大概是要用creat_grather() 23.9.11
+    
 
     uvicorn.run(app, port=5701, host="0.0.0.0", log_level="warning")
