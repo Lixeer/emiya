@@ -23,7 +23,9 @@ def getMsg(id: int):
 
 
 app = FastAPI()
-log = Log()
+#使用域内创建
+
+log = Log()  
 msg = MessageInput()
 
 
