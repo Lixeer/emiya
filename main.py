@@ -100,4 +100,4 @@ if __name__ == "__main__":
 
 
 
-    uvicorn.run(app, port=5701, host="0.0.0.0", log_level="warning")
+    uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2)
