@@ -8,6 +8,8 @@ from fastapi import Request, FastAPI
 from libs.Logger import Log
 from libs.message import MessageInput
 from libs.Request import Message
+from libs import cqinit
+
 
 BASEURL = "http://127.0.0.1:5700"
 
@@ -93,6 +95,9 @@ if __name__ == "__main__":
     log.logInfo("emiya正在启动")
     import uvicorn
 
-    asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
+    # asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
+    cqinit.init()
+
+
 
     uvicorn.run(app, port=5701, host="0.0.0.0", log_level="warning")
