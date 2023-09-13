@@ -1,6 +1,7 @@
 # coding:utf-8
 
 import requests
+import argparse
 import subprocess
 import asyncio
 from fastapi import Request, FastAPI
@@ -9,7 +10,7 @@ from libs.Logger import Log
 from libs.message import MessageInput
 from libs.Request import Message
 from libs import cqinit
-
+import plugins.myplugin as plug
 
 BASEURL = "http://127.0.0.1:5700"
 
@@ -30,27 +31,29 @@ app = FastAPI()
 log = Log()
 msg = MessageInput()
 
+flag: str = "default"  # default  mix-console  debug
+parser = argparse.ArgumentParser(description="主程序脚本，当前为测试阶段测试所用")
+parser.add_argument('--debug', help="调试模式", action='store_true')
+args = parser.parse_args()
+
+if args.debug:
+    flag = "debug"
+
 
 @app.post("/")
 async def handle(request: Request):
     data = await request.json()
-    msg.cheak(data)
+    if data:
+        msg.cheak(data)
 
-    f = Message()
+        f = Message()
 
-    # 回复测试 23.9.8
-    # 小驼峰！！！
-    if data["post_type"] == "message":
-        if data["message_type"] == "private":
-            userId = data["user_id"]
-            message = "[Report]: message received."
-            res = f.send_private_msg(userId, message=message)
-            if res.status_code == 200:
-                log.logDebug(f"[Response]: success")  # f不带{}啥情况
-            else:
-                log.logError("[Response]: faild")
+        # 回复测试 23.9.8
+        plug.msgResponseTest(f, log, data)
 
-    # log.logInfo(f.send_private_msg(2322978154, "ok").text)
+        # log.logInfo(f.send_private_msg(2322978154, "ok").text)
+    else:
+        await asyncio.sleep(1)
 
     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
@@ -70,7 +73,7 @@ async def fixOutput():
             if "诊断完成" in line:
                 print(line)
                 process.kill()
-                process = subprocess.Popen(
+                subprocess.Popen(
                     "go-cqhttp_windows_amd64.exe", stdout=subprocess.DEVNULL
                 )
                 break
@@ -96,8 +99,14 @@ if __name__ == "__main__":
     import uvicorn
 
     # asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
-    cqinit.init()
-
-
+    match flag:
+        case 'default':
+            cqinit.init()
+        case 'mix-console':
+            pass
+        case 'debug':
+            cqinit.DebugMode.debug()
+        case _:
+            print("Unknown args")
 
     uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2)

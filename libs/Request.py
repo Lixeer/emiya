@@ -50,7 +50,7 @@ class Message(RequestsMessage):
         """
         return self.send("get_friend_list")
 
-    def get_friend_list(self, flag: bool):
+    def getFriendList(self, flag: bool):
         """
         参数
         字段名	数据类型	默认值	说明
@@ -101,7 +101,7 @@ class Message(RequestsMessage):
         }
         return self.sendata("send_private_msg", data)
 
-    def send_private_msg(self, user_id: int, message: str):
+    def sendPrivateMsg(self, user_id: int, message: str):
         """
         参数
         字段名	    数据类型	    默认值	    说明
@@ -154,7 +154,7 @@ class Message(RequestsMessage):
         }
         return self.sendata("send_msg", data)
 
-    def send_msg(self, user_id: int, message: str, message_type="private"):
+    def sendMsg(self, user_id: int, message: str, message_type="private"):
         """
         字段名	        数据类型	默认值	说明
         message_type	string	-	消息类型, 支持 private、group , 分别对应私聊、群组, 如不传入, 则根据传入的 *_id 参数判断
