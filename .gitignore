@@ -8,6 +8,7 @@ __pycache__/
 
 # IDE生成文件
 .vscode/
+.idea/
 
 *.token
 
