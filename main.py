@@ -1,5 +1,6 @@
 # coding:utf-8
 
+import time
 import requests
 import argparse
 import subprocess
@@ -39,21 +40,37 @@ args = parser.parse_args()
 if args.debug:
     flag = "debug"
 
+@app.middleware("http")
+async def addProcessTimeHeader(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(await request.json())
+    process_time = time.time() - start_time
+
+    data = await request.json()
+    if 'message_type' in data:  # 排除心跳包data的干扰
+        if data['message_type'] == 'private':
+            log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
+        else:
+            log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
+
+    response.headers["X-Process-Time"] = str(process_time)
+
+    return response
+
 
 @app.post("/")
 async def handle(request: Request):
-    data = await request.json()
-    if data:
-        msg.cheak(data)
-
-        f = Message()
+    # print(await request.json())
+    # data = await request.json()
+    # if data:
+    #     f = Message()
 
         # 回复测试 23.9.8
-        plug.msgResponseTest(f, log, data)
+        # plug.msgResponseTest(f, log, data)
 
         # log.logInfo(f.send_private_msg(2322978154, "ok").text)
-    else:
-        await asyncio.sleep(1)
+    # else:
+    # await asyncio.sleep(1)
 
     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
@@ -83,7 +100,6 @@ async def fixOutput():
         print("Coroutine cancelled")
         await asyncio.shield(asyncio.sleep(0))
     return -1
-
 
 async def getFixedMsg():
     print("processing start")
