@@ -40,18 +40,24 @@ args = parser.parse_args()
 if args.debug:
     flag = "debug"
 
+async def setBody(request):
+    receive_ = await request._receive()
+
+    async def receive():
+        return receive_
+
+    request._receive = receive
+
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
+    await setBody(request)
     start_time = time.time()
-    response = await call_next(await request.json())
+    response = await call_next(request)
     process_time = time.time() - start_time
 
     data = await request.json()
     if 'message_type' in data:  # 排除心跳包data的干扰
-        if data['message_type'] == 'private':
-            log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
-        else:
-            log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
+        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
 
     response.headers["X-Process-Time"] = str(process_time)
 
@@ -60,18 +66,7 @@ async def addProcessTimeHeader(request: Request, call_next):
 
 @app.post("/")
 async def handle(request: Request):
-    # print(await request.json())
-    # data = await request.json()
-    # if data:
-    #     f = Message()
-
-        # 回复测试 23.9.8
-        # plug.msgResponseTest(f, log, data)
-
-        # log.logInfo(f.send_private_msg(2322978154, "ok").text)
-    # else:
-    # await asyncio.sleep(1)
-
+    data = await request.json()
     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
 
