@@ -50,6 +50,7 @@ async def setBody(request):
 
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
+    #日志和适配器请写在中间件
     await setBody(request)
     start_time = time.time()
     response = await call_next(request)
