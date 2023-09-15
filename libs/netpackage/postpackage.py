@@ -11,7 +11,7 @@ class PostPackageFactory:
         pass
 
     def creat(self, request: dict):
-        # 解包逻辑写有右边
+        # 解包代码写在这里
         # 伪代码如下
         r = None
         for e in self.modelList:
