@@ -16,7 +16,7 @@ class PostPackageFactory:
         r = None
         for e in self.modelList:
             try:
-                r = e[0](request)
+                r = e[0](**request)
             except:
                 pass
         return r
