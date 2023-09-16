@@ -26,8 +26,7 @@ def msgResponseTest(f: Message, log: Log, received: Any) -> None:
 
 
 if __name__ == "__main__":
-    # msg.send_group_msg(746490988, "send_group_msg"+normal)
-    res = msg.getFriendList(True)
-    data = res['data']
-    for dic in data:
-        print(dic)
+    a = {"name": "小明"}
+    b = {"score": [86, 97, 88]}
+    for item in b.keys():
+        print(b[item])
