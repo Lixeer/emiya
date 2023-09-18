@@ -12,6 +12,7 @@ from libs.message import MessageInput
 from libs.Request import Message
 from libs import cqinit
 import plugins.myplugin as plug
+from libs.netpackage.postpackage import PostPackageFactory
 
 BASEURL = "http://127.0.0.1:5700"
 
@@ -31,6 +32,7 @@ app = FastAPI()
 
 log = Log()
 msg = MessageInput()
+ppf = PostPackageFactory()
 
 flag: str = "default"  # default  mix-console  debug
 parser = argparse.ArgumentParser(description="主程序脚本，当前为测试阶段测试所用")
@@ -40,6 +42,7 @@ args = parser.parse_args()
 if args.debug:
     flag = "debug"
 
+
 async def setBody(request):
     receive_ = await request._receive()
 
@@ -48,9 +51,9 @@ async def setBody(request):
 
     request._receive = receive
 
+
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
-    #日志和适配器请写在中间件
     await setBody(request)
     start_time = time.time()
     response = await call_next(request)
@@ -68,6 +71,14 @@ async def addProcessTimeHeader(request: Request, call_next):
 @app.post("/")
 async def handle(request: Request):
     data = await request.json()
+    p = ppf.creat(data)
+    # print(p)
+    # print(p.self_id)
+
+    print(data)
+    print(type(p))
+    print('--------------------------------------')
+
     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
 
@@ -96,6 +107,7 @@ async def fixOutput():
         print("Coroutine cancelled")
         await asyncio.shield(asyncio.sleep(0))
     return -1
+
 
 async def getFixedMsg():
     print("processing start")
