@@ -9,6 +9,7 @@ from fastapi import Request, FastAPI
 
 from libs.Logger import Log
 from libs.message import MessageInput
+from libs.Request import Message
 from libs import cqinit
 import plugins.myplugin as plug
 
@@ -31,14 +32,13 @@ app = FastAPI()
 log = Log()
 msg = MessageInput()
 
-flag: str = "default"  # default, mix-console, debug
+flag: str = "default"  # default  mix-console  debug
 parser = argparse.ArgumentParser(description="主程序脚本，当前为测试阶段测试所用")
 parser.add_argument('--debug', help="调试模式", action='store_true')
 args = parser.parse_args()
 
 if args.debug:
     flag = "debug"
-
 
 async def setBody(request):
     receive_ = await request._receive()
@@ -48,10 +48,9 @@ async def setBody(request):
 
     request._receive = receive
 
-
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
-    # 日志和适配器请写在中间件
+    #日志和适配器请写在中间件
     await setBody(request)
     start_time = time.time()
     response = await call_next(request)
@@ -98,7 +97,6 @@ async def fixOutput():
         print("Coroutine cancelled")
         await asyncio.shield(asyncio.sleep(0))
     return -1
-
 
 async def getFixedMsg():
     print("processing start")

@@ -7,21 +7,27 @@ class PostPackageFactory:
     modelList = []
 
     @classmethod
-    def sort(self):
-        pass
+    def sort(self):  # 冒泡排序
+        for i in range(0, len(self.modelList) - 1):
+            for j in range(0, len(self.modelList) - 1 - i):
+                if self.modelList[j][1] < self.modelList[j+1][1]:
+                    self.modelList[j], self.modelList[j+1] = self.modelList[j+1], self.modelList[j]
 
     def creat(self, request: dict):
         # 解包逻辑写在这里
-
+        self.sort()
         # 伪代码如下
         r = None
         for e in self.modelList:
             try:
                 r = e[0](**request)
+                return r
             except:
                 pass
                 # print(f'=================================={e[0]}数据模型类出错')
         return r
+
+
 
 def registerModel(rate: int=1):
     def rg(cls):
@@ -99,39 +105,37 @@ class MessagePackage(AbsPostPackage):  # 消息报文的公共字段的类
     raw_message: str
     font: int
 
-
-
 class NoticePackage(AbsPostPackage):  # 通知报文的公共字段的类
     notice_type: str
 
 
 
-@registerModel(1)  # 仅用装饰器注册到模型容器中
+@registerModel(16)  # 仅用装饰器注册到模型容器中
 class MetaPostPackage(AbsPostPackage):  # 心跳数据模型类
     meta_event_type: str
     status: Status
     interval: int
     # 根据gocqhttp文档封装
 
-@registerModel(1)
+@registerModel(9)
 class PrivateMessage(MessagePackage):  # 私有消息
     target_id: int
     sender: PrivateSender
     temp_source: int = None
 
-@registerModel(1)
+@registerModel(10)
 class GroupMessage(MessagePackage):  # 群消息
     group_id: int
     anonymous: None = None  # 匿名消息字段，未测试，如果没有就是None
     sender: GroupSender
     message_seq: int
 
-@registerModel(1)
+@registerModel(11)
 class PrivateRevoke(NoticePackage):  # 私聊消息撤回
     user_id: int
     message_id: int
 
-@registerModel(1)
+@registerModel(12)
 class GroupRevoke(NoticePackage):  # 群消息撤回
     group_id: int
     user_id: int
@@ -145,26 +149,26 @@ class GroupRevoke(NoticePackage):  # 群消息撤回
 #     operator_id: int
 #     user_id: int
 
-@registerModel(1)
+@registerModel(14)
 class GroupMemberChanges(NoticePackage):  # 群成员变动
     sub_type: str
     group_id: int
     operator_id: int
     user_id: int
 
-# @registerModel(1)
+@registerModel(13)
 class GroupAdministratorChanges(NoticePackage):  # 群管理员变动
     sub_type: str
     group_id: int
     user_id: int
 
-@registerModel(1)
+@registerModel(8)
 class GroupFileUpload(NoticePackage):  # 群文件上传
     group_id: int
     user_id: int
     file: UploadFile
 
-@registerModel(1)
+@registerModel(15)
 class GroupTaboo(NoticePackage):  # 群禁言
     sub_type: str
     group_id: int
@@ -172,43 +176,42 @@ class GroupTaboo(NoticePackage):  # 群禁言
     user_id: int
     duration: int
 
-# @registerModel(1)
+@registerModel(1)
 class AddFriends(NoticePackage):  # 好友添加
     user_id: int
 
-
-@registerModel(1)
+@registerModel(4)
 class PrivateStamp(NoticePackage):  # 好友戳一戳，未测试
     sub_type: str
     sender_id: int
     user_id: int
     target_id: int
 
-@registerModel(1)
+@registerModel(5)
 class GroupStamp(NoticePackage):  # 群内戳一戳，未测试
     sub_type: str
     group_id: int
     user_id: int
     target_id: int
 
-@registerModel(1)
+@registerModel(3)
 class GroupMemberTitleChange(NoticePackage):  # 群成员头衔变更，未测试
     sub_type: str
     group_id: int
     user_id: int
     title: str
 
-@registerModel(1)
+@registerModel(2)
 class ReceivingOfflineFiles(NoticePackage):  # 接收到离线文件，未测试
     user_id: int
     file: ReceiveFiles
 
-@registerModel(1)
+@registerModel(7)
 class OtherEndStatusChanges(NoticePackage):  # 其他客户端在线状态变更
     client: Client
     online: bool
 
-@registerModel(1)
+@registerModel(6)
 class EssenceMessageChange(NoticePackage):  # 精华消息变更，未测试
     sub_type: str
     group_id: int
