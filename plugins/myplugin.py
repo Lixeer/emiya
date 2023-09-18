@@ -4,10 +4,9 @@ from typing import Any
 sys.path.insert(0, sys.path[0] + "/../")
 from libs.Request import Message
 from libs.Logger import Log
-from libs.db.scoreboard import DataStorage
 
 msg = Message()
-db = DataStorage()
+
 normal = " (going well)"
 
 
@@ -29,4 +28,5 @@ def msgResponseTest(log: Log, received: Any) -> None:
 if __name__ == "__main__":
     a = {"name": "小明"}
     b = {"score": [86, 97, 88]}
-    db.create("./data/test.db")
+    for item in b.keys():
+        print(b[item])
