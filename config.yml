@@ -2,7 +2,7 @@
 
 account: # 账号相关
   uin:  # QQ账号
-  password: '' # 密码为空时使用扫码登录
+  password: '3467113474' # 密码为空时使用扫码登录
   encrypt: false  # 是否开启密码加密
   status: 0      # 在线状态 请参考 https://docs.go-cqhttp.org/guide/config.html#在线状态
   relogin: # 重连设置
@@ -23,7 +23,7 @@ account: # 账号相关
   # sign-server: 'http://127.0.0.1:8080' # 本地签名服务器
   # sign-server: 'https://signserver.example.com' # 线上签名服务器
   # 服务器可使用docker在本地搭建或者使用他人开放的服务
-  sign-server: 'https://qsign.lvlv.run:443'
+  sign-server: ''
   # 如果签名服务器的版本在1.1.0及以下, 请将下面的参数改成true
   is-below-110: false
   # 签名服务器所需要的apikey, 如果签名服务器的版本在1.1.0及以下则此项无效
