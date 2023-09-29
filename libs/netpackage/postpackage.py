@@ -16,7 +16,6 @@ class PostPackageFactory:
     def creat(self, request: dict):
         # 解包逻辑写在这里
         self.sort()
-        # 伪代码如下
         r = None
         for e in self.modelList:
             try:

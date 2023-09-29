@@ -16,3 +16,15 @@ class Singleton(metaclass=SingletonMeta):
     单例的基类，继承该类的子类都具有单例模式的特性
     """
     pass
+
+'''
+class A(Singleton):
+    def __init__(self):
+        self.ls=[]
+
+a=A()
+a.ls.append(2)
+
+b=A()
+print(b.ls)
+'''
