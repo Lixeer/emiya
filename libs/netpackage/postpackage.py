@@ -114,6 +114,8 @@ class MetaPostPackage(AbsPostPackage):  # 心跳数据模型类
     meta_event_type: str
     status: Status
     interval: int
+    def __str__(self):
+        return f"{self.meta_event_type} | {self.time}"
     # 根据gocqhttp文档封装
 
 @registerModel(9)
@@ -128,6 +130,9 @@ class GroupMessage(MessagePackage):  # 群消息
     anonymous: None = None  # 匿名消息字段，未测试，如果没有就是None
     sender: GroupSender
     message_seq: int
+
+    def __str__(self):
+        return f"{self.message_type}({self.group_id}) | {self.sender.nickname}({self.sender.user_id}) : {self.message}"
 
 @registerModel(11)
 class PrivateRevoke(NoticePackage):  # 私聊消息撤回
