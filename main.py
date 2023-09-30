@@ -1,18 +1,44 @@
-# coding:utf-8
+# coding:gbk
+import os
+import importlib
+class PluginLoader():
+
+    def __init__(self):
+        self.pls=[]
+    def load(self):
+        dir = os.listdir("plugins")
+        pluginls = [os.path.splitext(filename) for filename in dir if filename != "__pycache__"]
+        pluginls = [i[0] for i in pluginls]
+        for pl in pluginls:
+            m = importlib.import_module(f'plugins.{pl}')
+            #print(m)
+            self.pls.append(m)
+aPluginsLoader=PluginLoader()
+aPluginsLoader.load()
+#ÏÈ¼ÓÔØ²å¼ş
 
 import time
 import requests
 import argparse
-import subprocess
+
+
 import asyncio
+
 from fastapi import Request, FastAPI
 
 from libs.Logger import Log
 from libs.message import MessageInput
-from libs.Request import Message
+from libs.netpackage.postpackage import PostPackageFactory
+from libs.event.qqevent import EventControl,aEventControl
 from libs import cqinit
-import plugins.myplugin as plug
 
+
+
+
+
+
+
+'''
 BASEURL = "http://127.0.0.1:5700"
 
 
@@ -24,17 +50,18 @@ def sendGroupMsg(gid: int, text: str):
 def getMsg(id: int):
     d = {"message_id": id}
     return requests.post(f"{BASEURL}/get_msg", data=d)
-
+'''
 
 app = FastAPI()
-# ä½¿ç”¨åŸŸå†…åˆ›å»º
+# Ê¹ÓÃÓòÄÚ´´½¨
 
 log = Log()
 msg = MessageInput()
+npakage = PostPackageFactory()
 
 flag: str = "default"  # default  mix-console  debug
-parser = argparse.ArgumentParser(description="ä¸»ç¨‹åºè„šæœ¬ï¼Œå½“å‰ä¸ºæµ‹è¯•é˜¶æ®µæµ‹è¯•æ‰€ç”¨")
-parser.add_argument('--debug', help="è°ƒè¯•æ¨¡å¼", action='store_true')
+parser = argparse.ArgumentParser(description="Ö÷³ÌĞò½Å±¾£¬µ±Ç°Îª²âÊÔ½×¶Î²âÊÔËùÓÃ")
+parser.add_argument('--debug', help="µ÷ÊÔÄ£Ê½", action='store_true')
 args = parser.parse_args()
 
 if args.debug:
@@ -50,15 +77,16 @@ async def setBody(request):
 
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
-    #æ—¥å¿—å’Œé€‚é…å™¨è¯·å†™åœ¨ä¸­é—´ä»¶
+    #ÈÕÖ¾ºÍÊÊÅäÆ÷ÇëĞ´ÔÚÖĞ¼ä¼ş
     await setBody(request)
     start_time = time.time()
     response = await call_next(request)
     process_time = time.time() - start_time
 
+
     data = await request.json()
-    if 'message_type' in data:  # æ’é™¤å¿ƒè·³åŒ…dataçš„å¹²æ‰°
-        log.logInfo(f'{data["message_type"]} | {data["sender"]["nickname"]} : {data["message"]}')
+    p=npakage.creat(data)
+    log.logInfo(p)
 
     response.headers["X-Process-Time"] = str(process_time)
 
@@ -66,10 +94,20 @@ async def addProcessTimeHeader(request: Request, call_next):
 
 
 @app.post("/")
-async def handle(request: Request):
+async def handle(request: Request,aEventControl=EventControl()):
     data = await request.json()
-    plug.msgResponseTest(log, data)
-    return "data"  # å»æ‰è¿™è¡Œç”¨cqè¾“å‡º åˆ«ç”¨mainè¾“å‡ºcqä¿¡æ¯ 23.9.11
+
+    p=npakage.creat(data)
+    #print(aEventControl.eventList)
+    for each in aEventControl.eventList:
+
+
+        if each[0].isPass(p):
+
+            each[1](p)
+
+
+    return "data"  # È¥µôÕâĞĞÓÃcqÊä³ö ±ğÓÃmainÊä³öcqĞÅÏ¢ 23.9.11
 
 
 @app.get("/hello")
@@ -77,41 +115,21 @@ async def test():
     return "test"
 
 
-async def fixOutput():
-    try:
-        process = subprocess.Popen(
-            "go-cqhttp_windows_amd64.exe", stdout=subprocess.PIPE
-        )
-        while True:
-            line = process.stdout.readline().decode("utf-8").strip()
-            if "è¯Šæ–­å®Œæˆ" in line:
-                print(line)
-                process.kill()
-                subprocess.Popen(
-                    "go-cqhttp_windows_amd64.exe", stdout=subprocess.DEVNULL
-                )
-                break
-            else:
-                print(line)
-    except asyncio.CancelledError:
-        print("Coroutine cancelled")
-        await asyncio.shield(asyncio.sleep(0))
-    return -1
 
-async def getFixedMsg():
-    print("processing start")
-    cq = asyncio.create_task(fixOutput())
-    result = await cq
-    if result == -1:
-        pass
-    print("processing end, loading...")
+
+
+
+
 
 
 if __name__ == "__main__":
-    log.logInfo("emiyaæ­£åœ¨å¯åŠ¨")
+
+    print("emiyaÕıÔÚÆô¶¯")
+
+    #print(aPluginsLoader.pls)
     import uvicorn
 
-    # asyncio.run(getFixedMsg())  # å¤§æ¦‚æ˜¯è¦ç”¨creat_grather() 23.9.11
+    # asyncio.run(getFixedMsg())  # ´ó¸ÅÊÇÒªÓÃcreat_grather() 23.9.11
     match flag:
         case 'default':
             cqinit.init()
@@ -122,4 +140,4 @@ if __name__ == "__main__":
         case _:
             print("Unknown args")
 
-    uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2)
+    uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2 , reload=True)
