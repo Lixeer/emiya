@@ -104,6 +104,11 @@ class MessagePackage(AbsPostPackage):  # 消息报文的公共字段的类
     raw_message: str
     font: int
 
+
+    arg:str=None
+
+
+
 class NoticePackage(AbsPostPackage):  # 通知报文的公共字段的类
     notice_type: str
 
