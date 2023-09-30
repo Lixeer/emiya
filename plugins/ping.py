@@ -1,12 +1,12 @@
 # coding:utf-8
 
-from libs.event.qqevent import onkeyword
+from libs.event.qqevent import onkeyword,oncommand
 import requests
 
 BASEURL = "http://127.0.0.1:5700"
 def sendGroupMsg(gid: int, text: str):
     d = {"message": text, "group_id": gid}
-    print(requests.post(f"{BASEURL}/send_group_msg", data=d))
+    requests.post(f"{BASEURL}/send_group_msg", data=d)
 
 
 
@@ -28,5 +28,18 @@ def handle(netpackage):
         pass
 
     print("hello emiya")
+
+
+
+
+@oncommand( promat = [".","/"] , cmd = ["ts"])
+def handle(netpackage):
+    print("command触发")
+
+    try:
+        sendGroupMsg(gid=netpackage.group_id,text=f"参数为{netpackage.arg}")
+    except:
+        pass
+
 
 
