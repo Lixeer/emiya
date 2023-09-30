@@ -21,6 +21,18 @@ class DataStorage(Singleton):
         self.root = self.connection.root()
         self.close()
 
+    def __enter__(self):
+        self.storage = Fs.FileStorage(self.path)
+        self.db = DB(self.storage)
+        self.connection = self.db.open()
+        self.root = self.connection.root()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        transaction.commit()
+        self.connection.close()
+        self.db.close()
+        self.storage.close()
+
     def close(self):
         transaction.commit()
         self.connection.close()
@@ -79,3 +91,10 @@ if __name__ == '__main__':
     # del res['name']       # 删除
     db.show(flag=True)  # 查看数据项
     db.close()
+
+    # 使用 with 语句访问
+    with db as d:
+        res = db.find("name")  # 查找
+        print("[search result]:", res)
+        # del res['name']       # 删除
+        db.show(flag=True)  # 查看数据项
