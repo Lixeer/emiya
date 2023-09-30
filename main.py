@@ -92,10 +92,12 @@ async def addProcessTimeHeader(request: Request, call_next):
 
     return response
 
-
+plug = aPluginsLoader.pls[2]
 @app.post("/")
 async def handle(request: Request,aEventControl=EventControl()):
     data = await request.json()
+
+    plug.msgResponseTest(log,data)  # plugin 测试
 
     p=npakage.creat(data)
     #print(aEventControl.eventList)
@@ -128,7 +130,6 @@ if __name__ == "__main__":
 
     #print(aPluginsLoader.pls)
     import uvicorn
-
     # asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
     match flag:
         case 'default':
