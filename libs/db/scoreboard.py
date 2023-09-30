@@ -49,7 +49,7 @@ class DataStorage(Singleton):
         for item in data.keys():
             self.root[item] = data[item]
 
-    def find(self, pred):
+    def find(self, pred: str):
         for k in self.root.keys():
             if k == pred:
                 return self.root[k]
@@ -69,17 +69,21 @@ class DataStorage(Singleton):
                     count += 1
                 print(k + ':', self.root[k])
 
-    def change(self):
-        pass
+    def change(self, key: str, value):
+        self.root[key] = value
 
 
 if __name__ == '__main__':
     """scoreboard使用例"""
 
     # 初始化
-    msg = {"name": "小明", "score": [86, 97, 88]}
+    msg = {
+        "name": "小明",
+        "score": [86, 97, 88]
+    }
     db = DataStorage()  # 注册实例对象
     db.create('./data/beta.db')  # 创建
+
     db.open()  # 开启
     db.write(msg)  # 写入数据
     db.close()  # 关闭
@@ -90,6 +94,7 @@ if __name__ == '__main__':
     print("[search result]:", res)
     # del res['name']       # 删除
     db.show(flag=True)  # 查看数据项
+    db.change("name", "韩梅梅")
     db.close()
 
     # 使用 with 语句访问
