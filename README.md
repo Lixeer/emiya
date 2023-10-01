@@ -4,7 +4,7 @@
 <img src='YA.png' width='400' alt='logo' aling='middle'/>
 </p>
 
-[启动文档](/docs/启动文档.md)\
+[启动文档](/docs/启动文档.md)(暂时失效)\
 [规范](/docs/规范.md)
 
 
