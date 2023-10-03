@@ -27,7 +27,7 @@ import asyncio
 from fastapi import Request, FastAPI
 
 from libs.Logger import Log
-from libs.message import MessageInput
+
 from libs.netpackage.postpackage import PostPackageFactory
 from libs.event.qqevent import EventControl,aEventControl
 from libs import cqinit
@@ -56,7 +56,7 @@ app = FastAPI()
 # 使用域内创建
 
 log = Log()
-msg = MessageInput()
+
 npakage = PostPackageFactory()
 
 flag: str = "default"  # default  mix-console  debug
@@ -75,6 +75,8 @@ async def setBody(request):
 
     request._receive = receive
 
+
+"""
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
     #日志和适配器请写在中间件
@@ -91,13 +93,15 @@ async def addProcessTimeHeader(request: Request, call_next):
     response.headers["X-Process-Time"] = str(process_time)
 
     return response
-
+"""
 
 @app.post("/")
-async def handle(request: Request,aEventControl=EventControl()):
+async def handle(request: Request):
     data = await request.json()
 
     p=npakage.creat(data)
+    
+    log.logInfo(p)
     #print(aEventControl.eventList)
     for each in aEventControl.eventList:
 
