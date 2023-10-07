@@ -2,6 +2,10 @@
 <p align='center'>
 <img src='YA.png' width='200' alt='logo' aling='middle'/>
 </p>
+
+<center><h1>emiya</h1></center>
+
+
 ✨为QQ机器人开发者提供的新路径✨
 
 ## 开发文档
