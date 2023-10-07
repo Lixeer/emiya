@@ -4,7 +4,8 @@
 </p>
 
 
-<p align='center'>emiya</p>
+
+<h1 style="text-align: center; font-size: 24px;">emiya</h1>
 
 
 _✨为QQ机器人开发者提供的新路径✨_
