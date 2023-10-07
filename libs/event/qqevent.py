@@ -74,6 +74,27 @@ class CommandEvent(AbsEvent):
         return False
 
 
+class AtEvent(AbsEvent):
+    """
+    :atee :被at者
+    """
+    def __init__(self, atee):
+        self.atee = atee
+        pass
+
+    def isPass(self, netpackage) -> bool:
+        try:
+            for i in self.atee:
+                if i in netpackage.message:
+                    """
+                    TODO?
+                    """
+                    return True
+        except:
+            pass
+        return False
+
+
 def onkeyword(keywordList, rate=1):
     def rg(callback):
         EventControl().eventList.append((KeyWordEvent(rate=rate, keywordList=keywordList), callback))
