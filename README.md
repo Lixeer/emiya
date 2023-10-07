@@ -2,7 +2,8 @@
 <p align='center'>
 <img src='YA.png' width='200' alt='logo' aling='middle'/>
 </p>
-_✨为各位QQ机器人开发者提供的新路径✨
+✨为QQ机器人开发者提供的新路径✨
+
 ## 开发文档
 
 
