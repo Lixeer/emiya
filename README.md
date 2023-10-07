@@ -26,7 +26,7 @@ _✨敏捷,快速,轻量的解决方案✨_
 
 
 ##  加入我们
-- [QQ群](https://baidu.com)
+- [QQ群](https://qm.qq.com/q/Z4I2QiKKk2)
 
 
 
