@@ -4,10 +4,11 @@
 </p>
 
 
+<div align="center">
 
+# emiya
 
-## emiya
-
+</div>
 
 _✨为QQ机器人开发者提供的新路径✨_
 
