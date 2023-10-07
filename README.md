@@ -3,7 +3,8 @@
 <img src='YA.png' width='200' alt='logo' aling='middle'/>
 </p>
 
-#   emiya
+
+<p align='center'>emiya</p>
 
 
 _✨为QQ机器人开发者提供的新路径✨_
