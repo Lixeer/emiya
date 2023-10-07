@@ -21,5 +21,5 @@ _✨敏捷,快速,轻量的解决方案✨_
 ## 特别鸣谢
 
 
-- [go-cqhttp]()
+- [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 - [Fastapi]()
