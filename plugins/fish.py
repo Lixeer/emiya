@@ -12,7 +12,6 @@ import random
 import requests
 
 db = DataStorage()  # 注册实例对象
-db.open('libs/db/data/beta.db')
 
 BASEURL = "http://127.0.0.1:5700"
 
@@ -274,7 +273,6 @@ def fish(netpackage):
         pass
 
 
-db.close()
 
 if __name__ == '__main__':
     pass
