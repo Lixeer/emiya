@@ -10,6 +10,7 @@
 _✨为QQ机器人开发者提供的新路径✨_\
 _✨敏捷,快速,轻量的解决方案✨_
 <img src="https://img.shields.io/github/license/Lixeer/emiya" alt="license">
+<img src="https://img.shields.io/github/stars/Lixeer/emiya" alt="stars">
 </div>
 
 
