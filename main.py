@@ -15,7 +15,7 @@ class PluginLoader():
             self.pls.append(m)
 aPluginsLoader=PluginLoader()
 aPluginsLoader.load()
-#ÏÈ¼ÓÔØ²å¼ş
+#å…ˆåŠ è½½æ’ä»¶
 
 import time
 import requests
@@ -53,15 +53,15 @@ def getMsg(id: int):
 '''
 
 app = FastAPI()
-# Ê¹ÓÃÓòÄÚ´´½¨
+# ä½¿ç”¨åŸŸå†…åˆ›å»º
 
 log = Log()
 
 npakage = PostPackageFactory()
 
 flag: str = "default"  # default  mix-console  debug
-parser = argparse.ArgumentParser(description="Ö÷³ÌĞò½Å±¾£¬µ±Ç°Îª²âÊÔ½×¶Î²âÊÔËùÓÃ")
-parser.add_argument('--debug', help="µ÷ÊÔÄ£Ê½", action='store_true')
+parser = argparse.ArgumentParser(description="ä¸»ç¨‹åºè„šæœ¬ï¼Œå½“å‰ä¸ºæµ‹è¯•é˜¶æ®µæµ‹è¯•æ‰€ç”¨")
+parser.add_argument('--debug', help="è°ƒè¯•æ¨¡å¼", action='store_true')
 args = parser.parse_args()
 
 if args.debug:
@@ -79,7 +79,7 @@ async def setBody(request):
 """
 @app.middleware("http")
 async def addProcessTimeHeader(request: Request, call_next):
-    #ÈÕÖ¾ºÍÊÊÅäÆ÷ÇëĞ´ÔÚÖĞ¼ä¼ş
+    #æ—¥å¿—å’Œé€‚é…å™¨è¯·å†™åœ¨ä¸­é—´ä»¶
     await setBody(request)
     start_time = time.time()
     response = await call_next(request)
@@ -111,7 +111,7 @@ async def handle(request: Request):
             each[1](p)
 
 
-    return "data"  # È¥µôÕâĞĞÓÃcqÊä³ö ±ğÓÃmainÊä³öcqĞÅÏ¢ 23.9.11
+    return "data"  # å»æ‰è¿™è¡Œç”¨cqè¾“å‡º åˆ«ç”¨mainè¾“å‡ºcqä¿¡æ¯ 23.9.11
 
 
 @app.get("/hello")
@@ -128,19 +128,20 @@ async def test():
 
 if __name__ == "__main__":
 
-    print("emiyaÕıÔÚÆô¶¯")
+    print("emiyaæ­£åœ¨å¯åŠ¨")
 
     #print(aPluginsLoader.pls)
     import uvicorn
 
-    # asyncio.run(getFixedMsg())  # ´ó¸ÅÊÇÒªÓÃcreat_grather() 23.9.11
+    # asyncio.run(getFixedMsg())  # å¤§æ¦‚æ˜¯è¦ç”¨creat_grather() 23.9.11
     match flag:
         case 'default':
             cqinit.init()
         case 'mix-console':
             pass
         case 'debug':
-            cqinit.DebugMode.debug()
+            pass
+            #cqinit.DebugMode.debug()
         case _:
             print("Unknown args")
 
