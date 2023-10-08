@@ -67,33 +67,6 @@ args = parser.parse_args()
 if args.debug:
     flag = "debug"
 
-async def setBody(request):
-    receive_ = await request._receive()
-
-    async def receive():
-        return receive_
-
-    request._receive = receive
-
-
-"""
-@app.middleware("http")
-async def addProcessTimeHeader(request: Request, call_next):
-    #日志和适配器请写在中间件
-    await setBody(request)
-    start_time = time.time()
-    response = await call_next(request)
-    process_time = time.time() - start_time
-
-
-    data = await request.json()
-    p=npakage.creat(data)
-    log.logInfo(p)
-
-    response.headers["X-Process-Time"] = str(process_time)
-
-    return response
-"""
 
 @app.post("/")
 async def handle(request: Request):
@@ -113,6 +86,11 @@ async def handle(request: Request):
 
     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
+
+@app.post("/hook")
+async def handle():
+    pass
+    
 
 @app.get("/hello")
 async def test():
