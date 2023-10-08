@@ -94,6 +94,17 @@ class AtEvent(AbsEvent):
             pass
         return False
 
+class MessageEvent(AbsEvent):
+    def __init__(self,netpackage):
+        self.netpackage=netpackage
+    def isPass(self) -> bool:
+        try:
+            if self.netpackage.type == "message":
+                return True
+        except:
+            return False
+
+
 
 def onkeyword(keywordList, rate=1):
     def rg(callback):
