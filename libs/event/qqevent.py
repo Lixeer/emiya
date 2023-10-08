@@ -95,11 +95,11 @@ class AtEvent(AbsEvent):
         return False
 
 class MessageEvent(AbsEvent):
-    def __init__(self,netpackage):
-        self.netpackage=netpackage
-    def isPass(self) -> bool:
+    def __init__(self):
+        pass
+    def isPass(self,netpackage) -> bool:
         try:
-            if self.netpackage.type == "message":
+            if self.netpackage.post_type == "message":
                 return True
         except:
             return False
@@ -120,7 +120,9 @@ def oncommand(*, promat: list[str], cmd: list[str], rate=1):
         # print("38",EventControl().eventList)
 
     return rg
-
+def onmessage(rate=1):
+    def rg(callback):
+        EventControl().eventList.append((MessageEvent(),callback))
 def ontest(number, rate=1):
     def rg(callback):
         EventControl().eventList.append((TestEvent(number=number),callback))
