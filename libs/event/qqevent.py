@@ -40,7 +40,7 @@ class KeyWordEvent(AbsEvent):
 
 
 class CommandEvent(AbsEvent):
-    def __init__(self, cmd: list[str], prompt: list[str] = None):
+    def __init__(self, cmd: list, prompt: list = None):
         """
 
 
@@ -113,7 +113,7 @@ def onkeyword(keywordList, rate=1):
     return rg
 
 
-def oncommand(*, promat: list[str], cmd: list[str], rate=1):
+def oncommand(*, promat: list, cmd: list, rate=1):
     def rg(callback):
         EventControl().eventList.append((CommandEvent(cmd=cmd, prompt=promat), callback))
         # print("38",EventControl().eventList)
