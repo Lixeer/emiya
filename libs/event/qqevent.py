@@ -99,7 +99,7 @@ class MessageEvent(AbsEvent):
         pass
     def isPass(self,netpackage) -> bool:
         try:
-            if self.netpackage.post_type == "message":
+            if netpackage.post_type == "message":
                 return True
         except:
             return False
