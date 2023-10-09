@@ -12,7 +12,7 @@ _✨敏捷,快速,轻量的解决方案✨_
 <br />
 <img src="https://img.shields.io/github/license/Lixeer/emiya" alt="license">
 <img src="https://img.shields.io/github/stars/Lixeer/emiya" alt="stars">
-<img src="https://img.shields.io/badge/Support-Python%203.7%2B-green?">
+<img src="https://img.shields.io/badge/Support-Python%203.8%2B-green?">
 </div>
 
 
@@ -20,7 +20,7 @@ _✨敏捷,快速,轻量的解决方案✨_
 
 
 - [安装](./docs/启动文档.md)
-- [设计与实现]()
+- [设计与实现](baidu.com)
 - [规范](./docs/规范.md)
 
 ## 特别鸣谢
