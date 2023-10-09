@@ -108,19 +108,7 @@ if __name__ == "__main__":
 
     print("emiya正在启动")
 
-    #print(aPluginsLoader.pls)
+    
     import uvicorn
-
-    # asyncio.run(getFixedMsg())  # 大概是要用creat_grather() 23.9.11
-    match flag:
-        case 'default':
-            cqinit.init()
-        case 'mix-console':
-            pass
-        case 'debug':
-            pass
-            #cqinit.DebugMode.debug()
-        case _:
-            print("Unknown args")
 
     uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2 , reload=True)
