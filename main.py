@@ -59,13 +59,6 @@ log = Log()
 
 npakage = PostPackageFactory()
 
-flag: str = "default"  # default  mix-console  debug
-parser = argparse.ArgumentParser(description="主程序脚本，当前为测试阶段测试所用")
-parser.add_argument('--debug', help="调试模式", action='store_true')
-args = parser.parse_args()
-
-if args.debug:
-    flag = "debug"
 
 
 @app.post("/")
@@ -106,7 +99,7 @@ async def test():
 
 if __name__ == "__main__":
 
-    print("emiya正在启动")
+    log.logInfo("emiya正在启动")
 
     
     import uvicorn
