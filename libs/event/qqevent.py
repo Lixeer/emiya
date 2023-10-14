@@ -75,24 +75,16 @@ class CommandEvent(AbsEvent):
 
 
 class AtEvent(AbsEvent):
-    """
-    :atee :被at者
-    """
-    def __init__(self, atee):
-        self.atee = atee
-        pass
 
     def isPass(self, netpackage) -> bool:
         try:
-            for i in self.atee:
-                if i in netpackage.message:
-                    """
-                    TODO?
-                    """
-                    return True
-        except:
-            pass
+            cq = "[cq=at,qq=" + netpackage.user_id + "]"
+            if cq in netpackage.message
+                return True
+        except Exception as e:
+            print(e)
         return False
+
 
 class MessageEvent(AbsEvent):
     def __init__(self):
