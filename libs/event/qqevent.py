@@ -79,7 +79,7 @@ class AtEvent(AbsEvent):
     def isPass(self, netpackage) -> bool:
         try:
             cq = "[cq=at,qq=" + netpackage.user_id + "]"
-            if cq in netpackage.message
+            if cq in netpackage.message:
                 return True
         except Exception as e:
             print(e)
