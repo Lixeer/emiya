@@ -62,7 +62,7 @@ class CommandEvent(AbsEvent):
                 for k in self.cmd:
 
                     if s.startswith(i + k):
-                        netpackage.arg = s.replace(i + k, "", 1)
+                        netpackage.arg = s.replace(i + k, " ", 1)
 
                         return True
 
