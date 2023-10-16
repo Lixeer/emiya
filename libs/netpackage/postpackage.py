@@ -1,7 +1,12 @@
 # 开发时间：2023/9/15  21:41
 # The road is nothing，the end is all    --Demon
 
+
+
+
 from pydantic import BaseModel
+
+from abc import ABCMeta, abstractmethod
 
 class PostPackageFactory:
     modelList = []
@@ -88,12 +93,22 @@ class Client(BaseModel):  # OtherEndStatusChanges类的client字段的类
     device_name: str
 
 
-class AbsPostPackage(BaseModel):  # 所有报文字段的公共字段类
-    # 公共字段写这里
+class AbsPostPackage(BaseModel,metaclass=ABCMeta):  # 所有报文字段的公共字段类
+    # 抽象报文 子类再实现
     time: int
     self_id: int
     post_type: str
-    # pass
+
+    
+    @abstractmethod
+    def reply(self,text:str):
+        pass
+
+
+
+
+
+    
 
 class MessagePackage(AbsPostPackage):  # 消息报文的公共字段的类
     message_type: str
@@ -106,6 +121,24 @@ class MessagePackage(AbsPostPackage):  # 消息报文的公共字段的类
 
 
     arg:str=None
+
+    @abstractmethod
+    def getID(self)->int:
+        #获取上报 id 如果来自群聊就是群号 来自私聊就是发送者q号
+        pass
+
+    
+    def getMessage(self)->str:
+        return self.message
+
+    
+    def getMessageID(self)->str:
+        return self.message_id
+
+    @abstractmethod
+    def getSender(self):
+        pass
+    
 
 
 
@@ -124,10 +157,16 @@ class MetaPostPackage(AbsPostPackage):  # 心跳数据模型类
     # 根据gocqhttp文档封装
 
 @registerModel(9)
-class PrivateMessage(MessagePackage):  # 私有消息
+class PrivateMessage(MessagePackage):  # 私聊消息
     target_id: int
     sender: PrivateSender
     temp_source: int = None
+
+    def getID(self)->int:
+        return self.sender.user_id
+        
+    def getSender(self)->PrivateSender:
+        return self.sender
 
 @registerModel(10)
 class GroupMessage(MessagePackage):  # 群消息
@@ -135,6 +174,12 @@ class GroupMessage(MessagePackage):  # 群消息
     anonymous: None = None  # 匿名消息字段，未测试，如果没有就是None
     sender: GroupSender
     message_seq: int
+
+    def getID(self)->int:
+        return self.group_id
+        
+    def getSender(self)->GroupSender:
+        return self.sender
 
     def __str__(self):
         return f"{self.message_type}({self.group_id}) | {self.sender.nickname}({self.sender.user_id}) : {self.message}"
