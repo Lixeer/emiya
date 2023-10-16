@@ -1,6 +1,8 @@
 # coding:utf-8
 
 from libs.event.qqevent import onkeyword,oncommand
+from libs.netpackage.postnetpackage import MessagePackage
+
 import requests
 
 BASEURL = "http://127.0.0.1:5700"
@@ -20,7 +22,7 @@ def sendGroupMsg(gid: int, text: str):
 
 
 @onkeyword(keywordList=["ping"])
-def handle(netpackage):
+def handle(netpackage:MessagePackage):
 
     try:
         sendGroupMsg(gid=netpackage.group_id,text="pong")
@@ -33,7 +35,7 @@ def handle(netpackage):
 
 
 @oncommand( promat = [".","/"] , cmd = ["ts"])
-def handle(netpackage):
+def handle(netpackage:MessagePackage):
     print("command触发")
 
     try:
