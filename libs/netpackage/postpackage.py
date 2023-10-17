@@ -165,6 +165,10 @@ class PrivateMessage(MessagePackage):  # 私聊消息
         
     def getSender(self)->PrivateSender:
         return self.sender
+    
+    def __str__(self):
+        return f"{self.message_type}({self.getID()}) | {self.sender.nickname}({self.sender.user_id}) : {self.message}"
+
 
 @registerModel(10)
 class GroupMessage(MessagePackage):  # 群消息
