@@ -100,9 +100,7 @@ class AbsPostPackage(BaseModel,metaclass=ABCMeta):  # 所有报文字段的公�
     post_type: str
 
     
-    @abstractmethod
-    def reply(self,text:str):
-        pass
+    
 
 
 
