@@ -20,21 +20,16 @@ aPluginsLoader.load()
 import time
 import requests
 import argparse
-
-
 import asyncio
 
-from fastapi import Request, FastAPI
+from fastapi import Request, FastAPI,WebSocket
+
+from uvicorn import run
 
 from libs.Logger import Log
-
 from libs.netpackage.postpackage import PostPackageFactory
 from libs.event.qqevent import EventControl,aEventControl
 from libs import cqinit
-
-
-
-
 
 
 
@@ -59,25 +54,34 @@ log = Log()
 
 npakage = PostPackageFactory()
 
+# @app.post("/")
+
+#     data = await request.json()
+#
+#     p=npakage.creat(data)
+#
+#     log.logInfo(p)
+#     #print(aEventControl.eventList)
+#     for each in aEventControl.eventList:
+#
+#
+#         if each[0].isPass(p):
+#
+#             each[1](p)
+#
+#
+#     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
 
-@app.post("/")
-async def handle(request: Request):
-    data = await request.json()
-
-    p=npakage.creat(data)
-    
-    log.logInfo(p)
-    #print(aEventControl.eventList)
-    for each in aEventControl.eventList:
+@app.websocket("/")
+async def websocket_endpoint(websocket: WebSocket):
+    print('=================================')
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_text()
+        print(data)
 
 
-        if each[0].isPass(p):
-
-            each[1](p)
-
-
-    return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 
 
 @app.post("/hook")

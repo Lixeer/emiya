@@ -1,7 +1,7 @@
 # go-cqhttp 默认配置文件
 
 account: # 账号相关
-  uin:  # QQ账号
+  uin: 1233456 # QQ账号
   password: '' # 密码为空时使用扫码登录
   encrypt: false  # 是否开启密码加密
   status: 0      # 在线状态 请参考 https://docs.go-cqhttp.org/guide/config.html#在线状态
@@ -16,24 +16,19 @@ account: # 账号相关
   # 是否允许发送临时会话消息
   allow-temp-session: false
 
-  # 数据包的签名服务器.
+  # 数据包的签名服务器
   # 兼容 https://github.com/fuqiuluo/unidbg-fetch-qsign
   # 如果遇到 登录 45 错误, 或者发送信息风控的话需要填入一个服务器
   # 示例:
   # sign-server: 'http://127.0.0.1:8080' # 本地签名服务器
   # sign-server: 'https://signserver.example.com' # 线上签名服务器
   # 服务器可使用docker在本地搭建或者使用他人开放的服务
-  sign-server: ''
-  # 如果签名服务器的版本在1.1.0及以下, 请将下面的参数改成true
-  is-below-110: false
-  # 签名服务器所需要的apikey, 如果签名服务器的版本在1.1.0及以下则此项无效
-  # 本地部署的默认为114514
-  key: '114514'
+  sign-server: '-'
 
 heartbeat:
   # 心跳频率, 单位秒
   # -1 为关闭心跳
-  interval: 10
+  interval: 5
 
 message:
   # 上报数据类型
@@ -64,7 +59,7 @@ message:
 
 output:
   # 日志等级 trace,debug,info,warn,error
-  log-level: error
+  log-level: warn
   # 日志时效 单位天. 超过这个时间之前的日志将会被自动删除. 设置为 0 表示永久保留.
   log-aging: 15
   # 是否在每次启动时强制创建全新的文件储存日志. 为 false 的情况下将会在上次启动时创建的日志文件续写
@@ -102,6 +97,7 @@ database: # 数据库相关设置
     # 关闭将无法使用 撤回 回复 get_msg 等上下文相关功能
     enable: false
     cachettl: 3600000000000 # 1h
+
 # 连接服务列表
 servers:
   # 添加方式，同一连接方式可添加多个，具体配置说明请查看文档
@@ -109,22 +105,16 @@ servers:
   #- ws:   # 正向 Websocket
   #- ws-reverse: # 反向 Websocket
   #- pprof: #性能分析服务器
-
-  - http: # HTTP 通信设置
-      address: 0.0.0.0:5700 # HTTP监听地址
-      version: 11     # OneBot协议版本, 支持 11/12
-      timeout: 5      # 反向 HTTP 超时时间, 单位秒，<5 时将被忽略
-      long-polling:   # 长轮询拓展
-        enabled: false       # 是否开启
-        max-queue-size: 2000 # 消息队列大小，0 表示不限制队列大小，谨慎使用
+  # 反向WS设置
+  - ws-reverse:
+      # 反向WS Universal 地址
+      # 注意 设置了此项地址后下面两项将会被忽略
+      universal: ws://0.0.0.0:5701/
+      # 反向WS API 地址
+      api: ws://your_websocket_api.server
+      # 反向WS Event 地址
+      event: ws://your_websocket_event.server
+      # 重连间隔 单位毫秒
+      reconnect-interval: 3000
       middlewares:
         <<: *default # 引用默认中间件
-      post:           # 反向HTTP POST地址列表
-      #- url: ''               # 地址
-      # secret: ''             # 密钥
-      # max-retries: 3         # 最大重试，0 时禁用
-      # retries-interval: 1500 # 重试时间，单位毫秒，0 时立即
-      - url: http://127.0.0.1:5701/ # 地址
-        secret: ''                  # 密钥
-#        max-retries: 0             # 最大重试，0 时禁用
-      #  retries-interval: 1000      # 重试时间，单位毫秒，0 时立即
