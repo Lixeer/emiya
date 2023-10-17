@@ -6,9 +6,9 @@ class Action:
   def __init__(self,websocket:WebSocket):
     self.websocket=websocket
     self._sendText=websocket.send_text
-  async def callApi(url,parmams):
+  async def callApi(self,url,**kwargs):
     d={"action":url,
-       "params":params
+       "params":kwargs
       }
     response = await self.sendText(d)
     return response
