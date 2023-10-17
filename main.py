@@ -71,7 +71,7 @@ async def websocket_endpoint(websocket: WebSocket):
         log.logDebug(data)
         
         actioner=Action(websocket)
-        np=npackage.creat(data,actioner)
+        np=npackage.creat(data,actioner=actioner)
         
         log.logInfo(np)
         for each in aEventControl.eventList:
