@@ -33,53 +33,48 @@ from libs import cqinit
 
 
 
-'''
-BASEURL = "http://127.0.0.1:5700"
-
-
-def sendGroupMsg(gid: int, text: str):
-    d = {"message": text, "group_id": gid}
-    print(requests.post(f"{BASEURL}/send_group_msg", data=d))
-
-
-def getMsg(id: int):
-    d = {"message_id": id}
-    return requests.post(f"{BASEURL}/get_msg", data=d)
-'''
-
 app = FastAPI()
-# 使用域内创建
+
 
 log = Log()
 
 npakage = PostPackageFactory()
 
-# @app.post("/")
+"""
+@app.post("/")
+def handle(request:Request)
+     data = await request.json()
 
-#     data = await request.json()
-#
-#     p=npakage.creat(data)
-#
-#     log.logInfo(p)
-#     #print(aEventControl.eventList)
-#     for each in aEventControl.eventList:
-#
-#
-#         if each[0].isPass(p):
-#
-#             each[1](p)
-#
-#
-#     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
+     p=npakage.creat(data)
 
+     log.logInfo(p)
+     #print(aEventControl.eventList)
+     for each in aEventControl.eventList:
+
+
+         if each[0].isPass(p):
+
+             each[1](p)
+
+
+     return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
+"""
 
 @app.websocket("/")
 async def websocket_endpoint(websocket: WebSocket):
-    print('=================================')
+    #print('=================================')
     await websocket.accept()
     while True:
+        
         data = await websocket.receive_text()
-        print(data)
+        log.logDebug(data)
+        np=npackage(data)
+        log.logInfo(np)
+
+
+
+        
+        
 
 
 
