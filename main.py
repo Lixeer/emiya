@@ -29,6 +29,7 @@ from uvicorn import run
 from libs.Logger import Log
 from libs.netpackage.postpackage import PostPackageFactory
 from libs.event.qqevent import EventControl,aEventControl
+from libs.action import Action
 from libs import cqinit
 
 
@@ -68,8 +69,19 @@ async def websocket_endpoint(websocket: WebSocket):
         
         data = await websocket.receive_text()
         log.logDebug(data)
-        np=npackage(data)
+        
+        actioner=Action(websocket)
+        np=npackage.creat(data,actioner)
+        
         log.logInfo(np)
+        for each in aEventControl.eventList:
+            
+            if each[0].isPass(np):
+                await each[1](np)
+            
+
+
+        
 
 
 
