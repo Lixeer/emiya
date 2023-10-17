@@ -19,8 +19,10 @@ async def handle(netpackage:MessagePackage):
     id=netpackage.getID()
     d={
         "group_id":id,
-        "h":"pong"
+        "message":"pong"
     }
+    rp=await netpackage.actioner.callApi(url="send_group_message",params=d)
+  
     
     
 
