@@ -6,7 +6,7 @@ class Action:
   def __init__(self,websocket:fastapi.WebSocket):
     self.websocket=websocket
     self._sendText=websocket.send_text
-  async def callApi(self,url,**kwargs):
+  async def callAPI(self,url,**kwargs):
     d={"action":url,
        "params":kwargs
       }
