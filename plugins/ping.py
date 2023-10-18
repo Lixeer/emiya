@@ -17,11 +17,7 @@ from libs.netpackage.postnetpackage import MessagePackage
 @onkeyword(keywordList=["ping"])
 async def handle(netpackage:MessagePackage):
     id=netpackage.getID()
-    d={
-        "group_id":id,
-        "message":"pong"
-    }
-    rp=await netpackage.actioner.callApi(url="send_group_message",params=d)
+    rp=await netpackage.actioner.callApi(url="send_group_message",group_id=id,message="pong")
   
     
     
