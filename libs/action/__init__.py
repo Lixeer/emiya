@@ -1,9 +1,9 @@
 #coding:utf-8
 
-from fastapi import WebSocket
+import Fastapi.WebSocket
 
 class Action:
-  def __init__(self,websocket:WebSocket):
+  def __init__(self,websocket:Fastapi.WebSocket):
     self.websocket=websocket
     self._sendText=websocket.send_text
   async def callApi(self,url,**kwargs):
