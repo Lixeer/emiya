@@ -8,7 +8,7 @@ from pydantic import BaseModel
 
 from abc import ABCMeta, abstractmethod
 
-from libs.action import Action
+
 class PostPackageFactory:
     modelList = []
 
@@ -19,13 +19,13 @@ class PostPackageFactory:
                 if self.modelList[j][1] < self.modelList[j+1][1]:
                     self.modelList[j], self.modelList[j+1] = self.modelList[j+1], self.modelList[j]
 
-    def creat(self, request: dict , actioner:Action):
+    def creat(self, request: dict):
         # 解包逻辑写在这里
         self.sort()
         r = None
         for e in self.modelList:
             try:
-                r = e[0](**request,actioner=actioner)
+                r = e[0](**request)
                 return r
             except:
                 pass
@@ -99,7 +99,7 @@ class AbsPostPackage(BaseModel,metaclass=ABCMeta):  # 所有报文字段的公�
     time: int
     self_id: int
     post_type: str
-    actioner:Action
+    
 
 
 
