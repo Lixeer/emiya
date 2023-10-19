@@ -39,7 +39,7 @@ app = FastAPI()
 
 log = Log()
 
-npakage = PostPackageFactory()
+npackage = PostPackageFactory()
 
 """
 @app.post("/")
