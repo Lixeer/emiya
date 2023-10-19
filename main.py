@@ -81,7 +81,7 @@ async def websocket_endpoint(websocket: WebSocket):
         for each in aEventControl.eventList:
             
             if each[0].isPass(np):
-                wraper=Wraper(actioner=actioner,netpackage=netpackage)
+                wraper=Wraper(actioner=actioner,netpackage=np)
                 await each[1](wraper)
             
 
