@@ -60,6 +60,10 @@ def handle(request:Request)
 
      return "data"  # 去掉这行用cq输出 别用main输出cq信息 23.9.11
 """
+class Wraper:
+    def __init__(self,actioner,netpackage):
+        self.actioner=actioner
+        self.callAPI=actioner.callAPI
 
 @app.websocket("/")
 async def websocket_endpoint(websocket: WebSocket):
@@ -71,13 +75,14 @@ async def websocket_endpoint(websocket: WebSocket):
         log.logDebug(data)
         
         actioner=Action(websocket)
-        np=npackage.creat(data,actioner=actioner)
+        np=npackage.creat(data)
         
         log.logInfo(np)
         for each in aEventControl.eventList:
             
             if each[0].isPass(np):
-                await each[1](np)
+                wraper=Wraper(actioner=actioner,netpackage=netpackage)
+                await each[1](wraper)
             
 
 
