@@ -12,7 +12,8 @@ class Action:
       }
     
     print(d)
-    response = await self._sendText(d)
+    await self._sendText(d)
+    response=await self.websocket.receive_json()
     return response
    
 
