@@ -27,7 +27,8 @@ class PostPackageFactory:
             try:
                 r = e[0](**request)
                 return r
-            except:
+            except Exception as e:
+                #print(e)
                 pass
                 # print(f'=================================={e[0]}数据模型类出错')
         return r
@@ -94,7 +95,7 @@ class Client(BaseModel):  # OtherEndStatusChanges类的client字段的类
     device_name: str
 
 
-class AbsPostPackage(BaseModel):  # 所有报文字段的公共字段类
+class AbsPostPackage(BaseModel,metaclass=ABCMeta):  # 所有报文字段的公共字段类
     # 抽象报文 子类再实现
     time: int
     self_id: int
