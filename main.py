@@ -1,6 +1,7 @@
 # coding:utf-8
 import os
 import importlib
+
 class PluginLoader():
 
     def __init__(self):
@@ -21,6 +22,7 @@ import time
 import requests
 import argparse
 import asyncio
+import json
 
 from fastapi import Request, FastAPI,WebSocket
 
@@ -64,6 +66,7 @@ class Wraper:
     def __init__(self,actioner,netpackage):
         self.actioner=actioner
         self.callAPI=actioner.callAPI
+        self.netpackage=netpackage
 
 @app.websocket("/")
 async def websocket_endpoint(websocket: WebSocket):
@@ -72,6 +75,7 @@ async def websocket_endpoint(websocket: WebSocket):
     while True:
         
         data = await websocket.receive_text()
+        data = json.loads(data)
         log.logDebug(data)
         
         actioner=Action(websocket)
