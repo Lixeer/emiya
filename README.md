@@ -25,7 +25,7 @@ _✨敏捷,快速,轻量的解决方案✨_
 
 
 ## 示例插件列表(随时删除)
-- [龙趴](https://github.com/Hananemu/emiya-game-plugins)
+- [前往](./docs/插件.md)
 
 
 
