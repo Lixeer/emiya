@@ -1,6 +1,9 @@
 # coding:utf-8
 import os
 import importlib
+from libs.Logger import logInfo,logError
+
+
 
 class PluginLoader():
 
@@ -12,11 +15,15 @@ class PluginLoader():
         pluginls = [i[0] for i in pluginls]
         for pl in pluginls:
             m = importlib.import_module(f'plugins.{pl}')
-            #print(m)
+            logInfo(f"{pl}|The plugin has been loaded")
             self.pls.append(m)
 aPluginsLoader=PluginLoader()
 aPluginsLoader.load()
 #先加载插件
+
+
+
+
 
 import time
 import requests
@@ -124,4 +131,4 @@ if __name__ == "__main__":
     
     import uvicorn
 
-    uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", workers=2 , reload=True)
+    uvicorn.run("main:app", port=5701, host="0.0.0.0", log_level="warning", reload=True)
