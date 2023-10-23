@@ -14,9 +14,17 @@ class PluginLoader():
         pluginls = [os.path.splitext(filename) for filename in dir if filename != "__pycache__"]
         pluginls = [i[0] for i in pluginls]
         for pl in pluginls:
-            m = importlib.import_module(f'plugins.{pl}')
-            logInfo(f"{pl}|The plugin has been loaded")
-            self.pls.append(m)
+            try:
+                m = importlib.import_module(f'plugins.{pl}')
+                logInfo(f"{pl}|The plugin has been loaded")
+                self.pls.append(m)
+            except Exception as e:
+                logError(f"{pl} can not be loaded")
+                logError(e)
+                
+            
+            
+            
 aPluginsLoader=PluginLoader()
 aPluginsLoader.load()
 #先加载插件
