@@ -96,6 +96,16 @@ class MessageEvent(AbsEvent):
         except:
             return False
 
+class HeartBeatEvent(AbsEvent):
+    def __init__(self):
+        pass
+    def isPass(self,netpackage) -> bool:
+        try:
+            if netpackage.post_type == "meta_event":
+                return True
+        except:
+            return False
+
 
 
 def onkeyword(keywordList, rate=1):
@@ -105,7 +115,12 @@ def onkeyword(keywordList, rate=1):
     return rg
 
 
+
+
 def oncommand(*, promat: list, cmd: list, rate=1):
+    """
+    
+    """
     def rg(callback):
         EventControl().eventList.append((CommandEvent(cmd=cmd, prompt=promat), callback))
         # print("38",EventControl().eventList)
@@ -113,8 +128,17 @@ def oncommand(*, promat: list, cmd: list, rate=1):
 
 
 def onmessage(rate=1):
+    """
+    
+    """
     def rg(callback):
         EventControl().eventList.append((MessageEvent(),callback))
+    
+    return rg
+
+def onheartbeat(rate=1):
+    def rg(callback):
+        EventControl().eventList.append((HeartbeatEvent(),callback))
     
     return rg
 
