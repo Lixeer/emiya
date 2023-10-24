@@ -107,10 +107,13 @@ class HeartBeatEvent(AbsEvent):
             return False
 class GroupIncreaseEvent(AbsEvent):
     
-    def isPass(self,n)->bool:
+    def isPass(self,netpackage)->bool:
         try:
-            if n.notice_type == "group_increase":
+            if netpackage.notice_type == "group_increase":
                 return True
+        except Exception as e:
+            # print(e)
+            pass
         return False
 
 
@@ -151,7 +154,7 @@ def onheartbeat(rate=1):
 def onGroupIncrease(rate=1):
     def rg(callback):
         EventControl().eventList.append( ( GroupIncreaseEvent(),callback ))
-
+    return rg
         
 
 def ontest(number, rate=1):
