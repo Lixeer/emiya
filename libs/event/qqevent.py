@@ -105,7 +105,13 @@ class HeartBeatEvent(AbsEvent):
                 return True
         except:
             return False
-
+class GroupIncreaseEvent(AbsEvent):
+    
+    def isPass(self,n)->bool:
+        try:
+            if n.notice_type == "group_increase":
+                return True
+        return False
 
 
 def onkeyword(keywordList, rate=1):
@@ -142,6 +148,11 @@ def onheartbeat(rate=1):
     
     return rg
 
+def onGroupIncrease(rate=1):
+    def rg(callback):
+        EventControl().eventList.append( ( GroupIncreaseEvent(),callback ))
+
+        
 
 def ontest(number, rate=1):
     def rg(callback):
