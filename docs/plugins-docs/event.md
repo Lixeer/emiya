@@ -83,3 +83,13 @@ class Wraper:
 ### ☘️开始
 ___
 <a name="onkeyword">`@onkeyword`</a>
+
+```python
+def onkeyword(keywordList:Iterable,rate:int=1):
+    """
+    param:
+    
+
+    """
+    
+```
