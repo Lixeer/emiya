@@ -10,6 +10,9 @@ class EventControl(libs.singleton.Singleton):
 
 class AbsEvent:
 
+    def __init__(self,rate=1):
+        self.rate=rate
+
     def isPass(self, netpackage) -> bool:
         pass
 
