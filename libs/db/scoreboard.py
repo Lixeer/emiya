@@ -2,7 +2,6 @@ import ZODB.FileStorage as Fs
 from ZODB import DB
 import transaction
 
-from libs.singleton import Singleton
 
 """
     usage: python scoreboard.py
@@ -17,7 +16,7 @@ from libs.singleton import Singleton
         
 """
 
-class DataStorage(Singleton):
+class DataStorage():
     def __init__(self):
         self.root = None
         self.connection = None
