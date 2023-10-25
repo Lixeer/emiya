@@ -10,7 +10,7 @@
 而plugins开发者需要做的就是定义回调函数，并加入到订阅列表<s>(看起来很麻烦)</s>
 
 _✨作为一个优雅pythoner✨_
-
+___
 ### ☘️一个示例
 ```python
 #coding:utf-8
@@ -21,14 +21,25 @@ or
 plugins/demo/__init__.py
 """
 from libs.event.qqevent import onkeyword
+#导入事件订阅装饰器
 
-@onkeyword(KeywordList=["ping"])
-def handle(n):
+@onkeyword(KeywordList=["ping","pong"])
+async def handle(aWraper):
+    #如果收到的消息包含ping 或 pong 就会触发该回调函数
 
-    message=n.netpackage.getMessage()
+    message=aWraper.netpackage.getMessage()
     print(message)
 
 ```
+`aWraper`是一个`包装器(Wraper)`对象<br>
+为了不引起歧义，下面将隆重介绍一下介绍一下<br>
+首先先看看Wraper类的<s>伪<s>代码
+```python
+
+```
+
+
+
 
 ### ☘️已实现的事件
 ---
