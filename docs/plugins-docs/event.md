@@ -33,10 +33,15 @@ async def handle(aWraper):
 ```
 `aWraper`是一个`包装器(Wraper)`对象<br>
 为了不引起歧义，下面将隆重介绍一下介绍一下<br>
-首先先看看Wraper类的<s>伪<s>代码
+首先看看Wraper类的<s>伪<s>代码
 ```python
-
+class Wraper:
+    def __init__(self,actioner,netpackage):
+        self.actioner=actioner
+        self.callAPI=actioner.callAPI
+        self.netpackage=netpackage
 ```
+很清晰的，`Wraper`就是一个集成`action(主动操作)`和`netpackage(上报数据)`的类
 
 
 
