@@ -1,8 +1,7 @@
 # coding:utf-8
-import libs.singleton
 
 
-class EventControl(libs.singleton.Singleton):
+class EventControl():
     # [(AbsEvent,callable)]
     def __init__(self):
         self.eventList = []
@@ -100,8 +99,7 @@ class MessageEvent(AbsEvent):
             return False
 
 class HeartBeatEvent(AbsEvent):
-    def __init__(self):
-        pass
+    
     def isPass(self,netpackage) -> bool:
         try:
             if netpackage.post_type == "meta_event":
@@ -150,7 +148,7 @@ def onmessage(rate=1):
 
 def onheartbeat(rate=1):
     def rg(callback):
-        EventControl().eventList.append((HeartbeatEvent(),callback))
+        EventControl().eventList.append((HeartbeatEvent(rate),callback))
     
     return rg
 
