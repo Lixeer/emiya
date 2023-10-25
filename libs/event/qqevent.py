@@ -1,7 +1,8 @@
 # coding:utf-8
 
+from libs.singleton import Singleton
 
-class EventControl():
+class EventControl(Singleton):
     # [(AbsEvent,callable)]
     def __init__(self):
         self.eventList = []
