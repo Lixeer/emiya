@@ -1,3 +1,5 @@
+from libs.singleton import Singleton
+
 
 from datetime import datetime
 import threading
@@ -21,7 +23,7 @@ def getCall():
     callName = callName[1:]
   return callName
 
-class Log():
+class Log(Singleton):
     # 可以是非单例 但是要有全局访问节点 代表状态的属性可以放静态变量里面
     def logInfo(self, message):
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
