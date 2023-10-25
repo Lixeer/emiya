@@ -49,9 +49,37 @@ class Wraper:
 ### ☘️已实现的事件
 ---
 这里有个表格(占位)
-
-
-
+<table border="2" width="400px">
+ <tr>
+  <th>事件名称</th>
+  <th>装饰器</th>
+ </tr>
+ <tr>
+  <td>命令事件</td>
+  <td>
+   <a href="#oncmmand">
+    @oncommand
+   </a>
+  </td>
+ </tr>
+ <tr>
+  <td>关键词事件</td>
+  <td>
+   <a href="#onkeyword">
+    @onkeyword
+   </a>
+  </td>
+ </tr>
+  <tr>
+  <td>心跳事件</td>
+  <td>
+   <a href="#onheartbeat">
+    @onheartbeat
+   </a>
+  </td>
+ </tr>
+</table>
+  
 ### ☘️开始
 ___
 <a name="onkeyword">`@onkeyword`</a>
