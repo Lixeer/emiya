@@ -34,7 +34,11 @@ _✨敏捷,快速,轻量的解决方案✨_
 
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 - [Fastapi](https://github.com/tiangolo/fastapi)
+## 感谢赞助
 
+`本项目所有计算能力由🏅快优互联🏅提供`
+
+- [快优互联 快速优质的服务商](kyvps.cn)
 
 ##  加入我们
 - [QQ群](https://qm.qq.com/q/Z4I2QiKKk2)
