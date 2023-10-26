@@ -110,5 +110,6 @@ def handle(n): #函数名和形参可瞎写
 `n.netpackage`下面简称`netpackage`
 
 `netpackage`可能的值为
-- <a href="./netpackage.md#GroupMessage">GroupMessage</a>
-- <a href="./netpackage.md#PrivateMessage">PrivateMessage</a>
+
+- [GroupMessage](./netpackage.md#GroupMessage)
+- [PrivateMessage](./netpackage.md#PrivateMessage)
