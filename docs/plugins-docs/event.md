@@ -3,7 +3,6 @@
 
 
 流程如下
-
 ```
 接收数据->轮询事件订阅列表->判断是否符合订阅的事件->执行回调函数(是)
 ```
@@ -107,4 +106,9 @@ def handle(n): #函数名和形参可瞎写
               group_id = id,
               message = "pong"
              )
+```
+`n.netpackage`下面简称`netpackage`
 
+`netpackage`可能的值为
+- <a href="./netpackage.md#GroupMessage">GroupMessage</a>
+- <a href="./netpackage.md#PrivateMessage">PrivateMessage</a>
