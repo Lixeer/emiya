@@ -88,6 +88,11 @@ ___
 def onkeyword(keywordList:Iterable,rate:int=1):
     """
     param:
+    keywordList Iterable : 关键词列表
+    rate int : 优先级
+
+    return :
+    None : 不可做函数调用
     
 
     """
