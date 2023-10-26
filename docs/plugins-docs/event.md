@@ -92,9 +92,19 @@ def onkeyword(keywordList:Iterable,rate:int=1):
     rate int : 优先级
 
     return :
-    None : 不可做函数调用
-    
-
+    None : 不可做函数调用    
     """
     
 ```
+使用示例(下面的其他装饰将省略使用示例)
+```python
+from libs.event.qqevent import onkeyword
+
+@onkeyword(keywordList=["ping"])
+def handle(n): #函数名和形参可瞎写
+    id = n.netpackage.getID()
+    n.callAPI(url = "send_msg",
+              group_id = id,
+              message = "pong"
+             )
+
