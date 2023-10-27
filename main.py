@@ -59,7 +59,7 @@ log = Log()
 npackage = PostPackageFactory()
 
 """
-@app.post("/")
+@app.post("/emiya/onebot11")
 def handle(request:Request)
      data = await request.json()
 
