@@ -149,7 +149,7 @@ def onmessage(rate=1):
 
 def onheartbeat(rate=1):
     def rg(callback):
-        EventControl().eventList.append((HeartbeatEvent(rate),callback))
+        EventControl().eventList.append((HeartBeatEvent(rate),callback))
     
     return rg
 
