@@ -30,8 +30,6 @@ _✨敏捷,快速,轻量的解决方案✨_
 
 
 ## 特别鸣谢
-<img width="186" alt="@6RWE@~YA33MT5OPC P@A" src="https://github.com/Lixeer/emiya/assets/130777751/815e469a-ac78-400b-a58a-276f868ebf3f">
-
 
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 - [Fastapi](https://github.com/tiangolo/fastapi)
