@@ -35,7 +35,8 @@ _✨敏捷,快速,轻量的解决方案✨_
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp)
 - [Fastapi](https://github.com/tiangolo/fastapi)
 ## 感谢赞助
-<img width="62" alt="@6RWE@~YA33MT5OPC P@A" src="https://github.com/Lixeer/emiya/assets/130777751/775857b2-f43b-4a92-8079-ea65838a0934">
+<img width="93" alt="@6RWE@~YA33MT5OPC P@A" src="https://github.com/Lixeer/emiya/assets/130777751/99d003d1-1399-488f-a0d6-51c52079eb9e">
+
 
  `本项目所有计算能力由🏅快优互联🏅提供`
 - [快优互联 快速优质的服务商](http://www.kyvps.cn)
