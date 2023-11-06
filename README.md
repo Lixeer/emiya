@@ -37,6 +37,8 @@ _✨敏捷,快速,轻量的解决方案✨_
 ## 感谢赞助
 
 `本项目所有计算能力由🏅快优互联🏅提供`
+![@6RWE@~YA33MT5OPC P@A](https://github.com/Lixeer/emiya/assets/130777751/be16648e-6628-42ed-9ccf-99084ae9b063)
+
 
 - [快优互联 快速优质的服务商](http://www.kyvps.cn)
 
