@@ -7,7 +7,7 @@ class MyMiddleWare(GlobalMiddleWare):
     async def verify(self,netpackage:AbsPostPackage,wrap)->bool:
         try:
             id=netpackage.getSender().user_id
-            if id == 1612655510:
+            if id == 123456:
                 print("ok")
                 return True
             else:
