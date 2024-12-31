@@ -1,6 +1,7 @@
 # coding:utf-8
 import os
 import importlib
+import inspect
 from libs.Logger import logInfo, logError
 
 
@@ -22,10 +23,11 @@ class PluginLoader():
                 logError(f"{pl} can not be loaded")
                 logError(e)
 
+if __name__ == "__main__":
 
-aPluginsLoader = PluginLoader()
-aPluginsLoader.load()
-print("emiya")
+    aPluginsLoader = PluginLoader()
+    aPluginsLoader.load()
+
 # 先加载插件
 
 
@@ -36,7 +38,7 @@ import asyncio
 import json
 
 from fastapi import Request, FastAPI, WebSocket
-
+import uvicorn
 
 from libs.Logger import Log
 from libs.netpackage.postpackage import PostPackageFactory
@@ -45,6 +47,7 @@ from libs.action import Action
 from libs.middleware import MiddleWareControl
 import middleware
 
+from  libs.action import Action
 app = FastAPI()
 
 log = Log()
@@ -64,29 +67,32 @@ class Wraper:
 async def websocket_endpoint(websocket: WebSocket):
 
     await websocket.accept()
+    log.logInfo("connected")
     while True:
 
         data = await websocket.receive_text()
         data = json.loads(data)
-        #log.logDebug(data)
-
-        actioner = Action(websocket)
-        np = npackage.creat(data)
-        try:
-            if np.post_type != "meta_event":
-                log.logInfo(np)
-        except:
-            pass
-
-
+        log.logDebug(data)
         for each in aEventControl.eventList:
+            if each[0].isPass(data=data):
+                sig = inspect.signature(each[1])
+                params_list = [params[0] for params in sig.parameters.items() if params[0] != "websocket"]
+                d = dict()
+                for k in params_list:
+                    try:
+                        d[k] = data[k]
+                    except Exception as e:
+                        logError(f"{k} can not be found",e)
 
-            if each[0].isPass(np):
-                wraper = Wraper(actioner=actioner, netpackage=np)
-                if not await aMiddleWare.globalMiddleWare.verify(netpackage=np,wrap=wraper):
-                    continue
 
-                await each[1](wraper)
+                await each[1](websocket, **d)
+
+
+
+        '''
+        for each in aEventControl.eventList:
+            print(each)
+            await each[1](websocket,data)'''
 
 
 @app.post("/hook")
@@ -102,6 +108,7 @@ async def test():
 if __name__ == "__main__":
     log.logInfo("emiya正在启动")
 
-    import uvicorn
 
-    uvicorn.run("main:app", port=5703, host="0.0.0.0", log_level="warning", reload=True)
+
+
+    uvicorn.run("main:app", port=5703, host="0.0.0.0", log_level="warning")
